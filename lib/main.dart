@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:the_best_clock/home_screen.dart';
+import 'package:flutter/services.dart';
+import 'package:the_best_clock/app_colors.dart';
+import 'package:the_best_clock/home_widget.dart';
 
 void main() {
-  runApp(const TheBestClock());
+  runApp(const MyApp());
 }
 
-class TheBestClock extends StatelessWidget {
-  const TheBestClock({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primaryColor: AppColors.primary,
+          secondaryHeaderColor: AppColors.secondary,
+        ),
+        home: const HomeWidget(),
       ),
-      home: const HomeScreen(),
     );
   }
 }

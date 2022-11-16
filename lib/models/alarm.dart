@@ -1,0 +1,16 @@
+class Alarm {
+  final String name;
+  final int hour;
+  final int minute;
+  final List<bool> weekdays;
+
+  String get time =>
+      '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+
+  Alarm({
+    required this.name,
+    required this.hour,
+    required this.minute,
+    required this.weekdays,
+  });
+}

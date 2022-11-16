@@ -29,23 +29,22 @@ class _ClockScreenState extends State<ClockScreen> {
     minute = now.minute;
     second = now.second;
 
-    while (true) {
-      await Future.delayed(const Duration(seconds: 1), () {
-        setState(() {
-          second++;
-          if (second == 60) {
-            second = 0;
-            minute++;
-            if (minute == 60) {
-              minute = 0;
-              hour++;
-              if (hour == 24) {
-                hour = 0;
-              }
+    while (mounted) {
+      setState(() {
+        second++;
+        if (second == 60) {
+          second = 0;
+          minute++;
+          if (minute == 60) {
+            minute = 0;
+            hour++;
+            if (hour == 24) {
+              hour = 0;
             }
           }
-        });
+        }
       });
+      await Future.delayed(const Duration(seconds: 1));
     }
   }
 
@@ -77,7 +76,7 @@ class _ClockScreenState extends State<ClockScreen> {
             child: CircularProgressIndicator(
               value: second / 60,
               strokeWidth: _strokeWidth,
-              color: AppColors.yellow,
+              color: AppColors.primary,
             ),
           ),
         ],

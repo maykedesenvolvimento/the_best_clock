@@ -8,6 +8,7 @@ class AlarmTile extends StatelessWidget {
   final VoidCallback onExpand;
   final Function(Alarm) onUpdated;
   final VoidCallback onDeleted;
+  final VoidCallback onEditClicked;
 
   AlarmTile({
     super.key,
@@ -16,6 +17,7 @@ class AlarmTile extends StatelessWidget {
     required this.onExpand,
     required this.onUpdated,
     required this.onDeleted,
+    required this.onEditClicked,
   });
 
   final List<String> initialsOfDays = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
@@ -106,7 +108,7 @@ class AlarmTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: onEditClicked,
                     child: Text(
                       'Editar',
                       style: TextStyle(

@@ -3,6 +3,8 @@ import 'package:the_best_clock/app_colors.dart';
 import 'package:the_best_clock/models/alarm.dart';
 import 'package:the_best_clock/views/alarm_tile.dart';
 
+import 'alarm_edit.dart';
+
 class AlarmsScreen extends StatefulWidget {
   const AlarmsScreen({super.key});
 
@@ -27,6 +29,20 @@ class _AlarmsScreenState extends State<AlarmsScreen> {
       weekdays: [false, false, false, false, false, false, true],
     ),
   ];
+
+  void openAlarmEdit(int index) {
+    showDialog(
+      context: context,
+      builder: (_) => AlarmEdit(
+        alarm: _alarms[index],
+        onUpdated: (alarm) {
+          setState(() {
+            _alarms[index] = alarm;
+          });
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +70,7 @@ class _AlarmsScreenState extends State<AlarmsScreen> {
                     weekdays: [false, false, false, false, false, false, false],
                   ),
                 );
+                openAlarmEdit(_alarms.length - 1);
               });
             },
           ),
@@ -80,6 +97,9 @@ class _AlarmsScreenState extends State<AlarmsScreen> {
                   setState(() {
                     _alarms.removeAt(index);
                   });
+                },
+                onEditClicked: () {
+                  openAlarmEdit(index);
                 },
               );
             }).toList(),

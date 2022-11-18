@@ -18,6 +18,16 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          textSelectionTheme: const TextSelectionThemeData(
+            cursorColor: AppColors.secondary,
+            selectionColor: AppColors.primary,
+            selectionHandleColor: AppColors.primary,
+          ),
+          inputDecorationTheme: const InputDecorationTheme(
+            focusColor: AppColors.secondary,
+            border: OutlineInputBorder(),
+            focusedBorder: OutlineInputBorder(),
+          ),
           primaryColor: AppColors.primary,
           secondaryHeaderColor: AppColors.secondary,
         ),

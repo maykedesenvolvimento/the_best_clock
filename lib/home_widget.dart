@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
 import 'app_scroll_behavior.dart';
-import 'views/clock.dart';
+import 'views/clock_screen.dart';
 import 'views/alarms_screen.dart';
-import 'views/timer.dart';
+import 'views/timer_screen.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:the_best_clock/app_colors.dart';
 import '../models/alarm.dart';
 
 class AlarmEdit extends StatefulWidget {
@@ -21,14 +20,10 @@ class _AlarmEditState extends State<AlarmEdit> {
   late final timeController = TextEditingController(text: widget.alarm.time);
   late final size = MediaQuery.of(context).size;
 
-  final buttonStyle = ButtonStyle(
-    visualDensity: VisualDensity.standard,
-    backgroundColor: MaterialStateProperty.all(
-      AppColors.secondary,
-    ),
-  );
-
   final radius = BorderRadius.circular(5);
+
+  int get hours => int.parse(timeController.text.split(':')[0]);
+  int get minutes => int.parse(timeController.text.split(':')[1]);
 
   @override
   Widget build(BuildContext context) {
@@ -58,11 +53,34 @@ class _AlarmEditState extends State<AlarmEdit> {
                   hintText: 'Horário',
                 ),
                 controller: timeController,
+                onTap: () {
+                  showTimePicker(
+                    context: context,
+                    initialTime: TimeOfDay(
+                      hour: hours,
+                      minute: minutes,
+                    ),
+                    cancelText: 'Cancelar',
+                    helpText: 'Selecione o horário',
+                    builder: (context, child) {
+                      return MediaQuery(
+                        data: MediaQuery.of(context).copyWith(
+                          alwaysUse24HourFormat: true,
+                        ),
+                        child: child!,
+                      );
+                    },
+                  ).then((selectedTime) {
+                    if (selectedTime != null) {
+                      timeController.text =
+                          '${selectedTime.hour.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')}';
+                    }
+                  });
+                },
               ),
               Row(
                 children: [
                   ElevatedButton(
-                    style: buttonStyle,
                     onPressed: Navigator.of(context).pop,
                     child: const Text(
                       'Fechar',
@@ -71,8 +89,14 @@ class _AlarmEditState extends State<AlarmEdit> {
                   const SizedBox(width: 10),
                   Expanded(
                     child: ElevatedButton(
-                      style: buttonStyle,
-                      onPressed: () {},
+                      onPressed: () {
+                        final alarm = widget.alarm;
+                        alarm.name = nameController.text;
+                        alarm.hour = hours;
+                        alarm.minute = minutes;
+                        widget.onUpdated(alarm);
+                        Navigator.of(context).pop();
+                      },
                       child: const Text(
                         'Salvar',
                       ),
